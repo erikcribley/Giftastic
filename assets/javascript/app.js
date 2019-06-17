@@ -1,11 +1,10 @@
-//api key DNjwWLOHXOEZm2mWllD1dgkcS3sEmUh4
-
+//array of GIF topics
 let topics = [
     "kitties",
     "doge",
     "octopi",
     "tardigrades",
-    "parrots",
+    "pterosaurs",
     "robots",
     "snakes",
     "giraffes",
@@ -13,14 +12,32 @@ let topics = [
     "unicorns",
 ]
 
-for(i = 0; i < topics.length; i++) {
+//loop to generate topic buttons
+function makeBtn () {
+    for(i = 0; i < topics.length; i++) {
     let gifBtn = $('<button>')
     gifBtn.text(topics[i])
     $('#btn-display').append(gifBtn)
+    }
 }
 
-let searchFor = $('#search-input').val()
+//call makeBtn function
+makeBtn()
 
-let queryURL = "http://api.giphy.com/v1/gifs/search?q=" + searchFor + "&api_key=DNjwWLOHXOEZm2mWllD1dgkcS3sEmUh4&limit=10&rating=pg-13"
+//make a new button
+function newBtn() {
+    $('#btn-display').empty()
+    makeBtn()
+}
 
-console.log(searchFor)
+//click event to create new topic button
+$("#search-submit").on("click", function(event){
+    event.preventDefault()
+    let searchFor = $("#search-input").val()
+    topics.push(searchFor)
+    newBtn()
+})
+
+
+let queryURL = "http://api.giphy.com/v1/gifs/search?q=" + "x" + "&api_key=DNjwWLOHXOEZm2mWllD1dgkcS3sEmUh4&limit=10&rating=pg-13"
+
