@@ -37,6 +37,7 @@ $("#search-submit").on("click", function(event){
 })
 
 $('button').on("click", function (){
+    $("#gif-display").empty()
     let getGif = $(this).attr("data-gif")
     let queryURL = "http://api.giphy.com/v1/gifs/search?q=" + getGif + "&api_key=DNjwWLOHXOEZm2mWllD1dgkcS3sEmUh4&limit=10&rating=pg-13"
     $.ajax({
@@ -44,11 +45,15 @@ $('button').on("click", function (){
     method: "GET"
     }).then(function(response) {
         console.log(response)
-        let rating = response.data[0].rating
-        let imageURL = response.data[0].images.original.url
-        let image = $("<img>")
-        image.attr("src", imageURL)
-        image.attr("alt", "cute gif")
-        $("#gif-display").prepend(image)        
+        for (j = 0; j < response.data.length; j++) {
+            let rating = response.data[j].rating;
+            let imageURL = response.data[j].images.original.url;
+            let image = $("<img>")
+            image.attr("src", imageURL)
+            image.attr("alt", "cute gif")
+            let isRated = ("Rating: " + rating)
+            $("#gif-display").prepend(isRated)
+            $("#gif-display").prepend(image)
+        }        
     })
 })
