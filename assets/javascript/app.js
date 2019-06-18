@@ -39,21 +39,38 @@ $("#search-submit").on("click", function(event){
 $('button').on("click", function (){
     $("#gif-display").empty()
     let getGif = $(this).attr("data-gif")
-    let queryURL = "http://api.giphy.com/v1/gifs/search?q=" + getGif + "&api_key=DNjwWLOHXOEZm2mWllD1dgkcS3sEmUh4&limit=10&rating=pg-13"
+    let queryURL = "https://api.giphy.com/v1/gifs/search?q=" + getGif + "&api_key=DNjwWLOHXOEZm2mWllD1dgkcS3sEmUh4&limit=10&rating=pg-13"
     $.ajax({
     url: queryURL,
     method: "GET"
     }).then(function(response) {
         console.log(response)
-        for (j = 0; j < response.data.length; j++) {
-            let rating = response.data[j].rating;
-            let imageURL = response.data[j].images.original.url;
+        for (i = 0; i < response.data.length; i++) {
+            let rating = response.data[i].rating;
+            let imageURL = response.data[i].images.original_still.url;
+            let imageAnimateURL = response.data[i].images.original.url;
             let image = $("<img>")
-            image.attr("src", imageURL)
-            image.attr("alt", "cute gif")
-            let isRated = ("Rating: " + rating)
-            $("#gif-display").prepend(isRated)
-            $("#gif-display").prepend(image)
-        }        
+            image
+                .attr("src", imageURL)
+                .attr("alt", "cute gif")
+                .attr("data-still", imageURL)
+                .attr("data-animate", imageAnimateURL)
+            let isRated = $("<p>")
+            isRated.text("Rating: " + rating)
+            $("#gif-display")
+                .append(isRated)
+                .append(image)  
+        } 
+        $('img').on("click", function (){
+            let state = $(this).attr("data-state")
+            if (state === "still") {
+                $(this).attr("src", $(this).attr("data-animate"))
+                $(this).attr("data-state", "animate")        
+            } else {
+                $(this).attr("src", $(this).attr("data-still"))
+                $(this).attr("data-state", "still")
+            }
+        })  
     })
 })
+
