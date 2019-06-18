@@ -28,8 +28,9 @@ function makeBtn () {
 makeBtn()
 
 //click event for buttons to get and display gifs
-$('button').on("click", function (){
+$('#btn-display').on("click", "button", function(){
     $("#gif-display").empty()
+    console.log("stuff")
     let getGif = $(this).text()
     let queryURL = "https://api.giphy.com/v1/gifs/search?q=" + getGif + "&api_key=DNjwWLOHXOEZm2mWllD1dgkcS3sEmUh4&limit=10&rating=pg-13"
     $.ajax({
@@ -54,7 +55,7 @@ $('button').on("click", function (){
                 .append(image)  
         } 
         //Click event to switch from still to animated
-        $('img').on("click", function (){
+        $('img').on("click", function(){
             let state = $(this).attr("data-state")
             if (state === "still") {
                 $(this).attr("src", $(this).attr("data-animate"))
