@@ -20,7 +20,6 @@ function makeBtn () {
     gifBtn
         .addClass("gif-btn")
         .text(topics[i])
-        .attr("data-gif", topics[i])
     $('#btn-display').append(gifBtn)
     }
 }
@@ -28,17 +27,10 @@ function makeBtn () {
 //call makeBtn function
 makeBtn()
 
-//click event to create new topic button
-$("#search-submit").on("click", function(event){
-    event.preventDefault()
-    let searchFor = $("#search-input").val().trim()
-    topics.push(searchFor)
-    makeBtn()
-})
-
+//click event for buttons to get and display gifs
 $('button').on("click", function (){
     $("#gif-display").empty()
-    let getGif = $(this).attr("data-gif")
+    let getGif = $(this).text()
     let queryURL = "https://api.giphy.com/v1/gifs/search?q=" + getGif + "&api_key=DNjwWLOHXOEZm2mWllD1dgkcS3sEmUh4&limit=10&rating=pg-13"
     $.ajax({
     url: queryURL,
@@ -61,6 +53,7 @@ $('button').on("click", function (){
                 .append(isRated)
                 .append(image)  
         } 
+        //Click event to switch from still to animated
         $('img').on("click", function (){
             let state = $(this).attr("data-state")
             if (state === "still") {
@@ -74,3 +67,10 @@ $('button').on("click", function (){
     })
 })
 
+//click event to create new topic button
+$("#search-submit").on("click", function(event){
+    event.preventDefault()
+    let searchFor = $("#search-input").val().trim()
+    topics.push(searchFor)
+    makeBtn()
+})
