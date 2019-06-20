@@ -18,7 +18,6 @@ function makeBtn () {
     for(i = 0; i < topics.length; i++) {
     let gifBtn = $('<button>')
     gifBtn
-        .addClass("gif-btn")
         .text(topics[i])
     $('#btn-display').append(gifBtn)
     }
@@ -30,9 +29,8 @@ makeBtn()
 //click event for buttons to get and display gifs
 $('#btn-display').on("click", "button", function(){
     $("#gif-display").empty()
-    console.log("stuff")
     let getGif = $(this).text()
-    let queryURL = "https://api.giphy.com/v1/gifs/search?q=" + getGif + "&api_key=DNjwWLOHXOEZm2mWllD1dgkcS3sEmUh4&limit=10&rating=pg-13"
+    let queryURL = "https://api.giphy.com/v1/gifs/search?q=" + getGif + "&api_key=DNjwWLOHXOEZm2mWllD1dgkcS3sEmUh4&limit=10&rating=pg"
     $.ajax({
     url: queryURL,
     method: "GET"
@@ -49,11 +47,13 @@ $('#btn-display').on("click", "button", function(){
                 .attr("data-still", imageURL)
                 .attr("data-animate", imageAnimateURL)
             let isRated = $("<p>")
-            isRated.text("Rating: " + rating)
-            $("#gif-display")
-                .append(isRated)
-                .append(image)  
-        } 
+            isRated
+                .text("Rating: " + rating)
+                .addClass("rating-text")
+            $("#gif-display")  
+                .append(image) 
+                .append(isRated)          
+        }
         //Click event to switch from still to animated
         $('img').on("click", function(){
             let state = $(this).attr("data-state")
