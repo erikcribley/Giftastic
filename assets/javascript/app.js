@@ -73,5 +73,6 @@ $("#search-submit").on("click", function(event){
     event.preventDefault()
     let searchFor = $("#search-input").val().trim()
     topics.push(searchFor)
+    $("#search-input").val("")
     makeBtn()
 })
