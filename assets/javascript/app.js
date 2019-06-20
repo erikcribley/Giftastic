@@ -23,9 +23,6 @@ function makeBtn () {
     }
 }
 
-//call makeBtn function
-makeBtn()
-
 //click event for buttons to get and display gifs
 $('#btn-display').on("click", "button", function(){
     $("#gif-display").empty()
@@ -76,3 +73,6 @@ $("#search-submit").on("click", function(event){
     $("#search-input").val("")
     makeBtn()
 })
+
+//call makeBtn function
+makeBtn()
